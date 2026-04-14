@@ -3,14 +3,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { AppTheme } from '@/constants/app-theme';
 
 type VerseCardProps = {
-  reference: string;
   verse: string;
+  reference: string;
 };
 
-export default function VerseCard({ reference, verse }: VerseCardProps) {
+export default function VerseCard({ verse, reference }: VerseCardProps) {
   return (
-    <View style={styles.card}>
-      <Text style={styles.kicker}>Today&apos;s meditation</Text>
+    <View style={styles.container}>
       <Text style={styles.verse}>{verse}</Text>
       <Text style={styles.reference}>{reference}</Text>
     </View>
@@ -18,31 +17,23 @@ export default function VerseCard({ reference, verse }: VerseCardProps) {
 }
 
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: AppTheme.colors.card,
-    borderRadius: AppTheme.radius.lg,
-    borderWidth: 1,
-    borderColor: AppTheme.colors.border,
-    padding: AppTheme.spacing.lg,
+  container: {
+    paddingHorizontal: AppTheme.spacing.lg,
+    marginBottom: AppTheme.spacing.xl,
     gap: AppTheme.spacing.sm,
-    ...AppTheme.shadows.card,
-  },
-  kicker: {
-    color: AppTheme.colors.accentStrong,
-    fontSize: 12,
-    fontWeight: '700',
-    letterSpacing: 1,
-    textTransform: 'uppercase',
   },
   verse: {
     color: AppTheme.colors.text,
-    fontSize: 20,
-    lineHeight: 30,
+    fontSize: 22,
+    lineHeight: 32,
+    textAlign: 'center',
     fontFamily: AppTheme.fonts.heading,
   },
   reference: {
     color: AppTheme.colors.textMuted,
     fontSize: 14,
     fontWeight: '600',
+    textAlign: 'center',
+    letterSpacing: 0.3,
   },
 });

@@ -1,17 +1,17 @@
 {
   "name": "prayer-app",
-  "main": "expo-router/entry",
+  "main": "expo/AppEntry",
   "version": "1.0.0",
   "scripts": {
     "prestart": "node ./scripts/check-node.js",
-    "start": "expo start",
+    "start": "expo start --offline",
     "preandroid": "node ./scripts/check-node.js",
     "reset-project": "node ./scripts/reset-project.js",
-    "android": "expo start --android",
+    "android": "expo start --offline --android",
     "preios": "node ./scripts/check-node.js",
-    "ios": "expo start --ios",
+    "ios": "expo start --offline --ios",
     "preweb": "node ./scripts/check-node.js",
-    "web": "expo start --web",
+    "web": "expo start --offline --web",
     "lint": "expo lint"
   },
   "dependencies": {

@@ -1,27 +1,36 @@
-export type PrayerCategoryId =
-  | 'daily'
-  | 'rosary'
-  | 'mercy'
-  | 'devotions'
-  | 'saints';
+import { ImageSourcePropType } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 export type Prayer = {
   id: string;
-  slug: string;
   title: string;
-  category: PrayerCategoryId;
-  duration: string;
-  excerpt: string;
   content: string;
-  tags: string[];
+};
+
+export type PrayerSubcategory = {
+  id: string;
+  title: string;
+  description: string;
+  image: ImageSourcePropType;
+  icon: string;
+  prayers: Prayer[];
 };
 
 export type PrayerCategory = {
-  id: PrayerCategoryId;
+  id: string;
   title: string;
-  subtitle: string;
-  icon: string;
-  tint: string;
-  surface: string;
-  prayerIds: string[];
+  description: string;
+  items: PrayerSubcategory[];
 };
+
+export type RootStackParamList = {
+  Home: undefined;
+  Category: { categoryId: string };
+  PrayerList: { categoryId: string; subcategoryId: string };
+  PrayerDetail: { categoryId: string; subcategoryId: string; prayerId: string };
+};
+
+export type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
+export type CategoryScreenProps = NativeStackScreenProps<RootStackParamList, 'Category'>;
+export type PrayerListScreenProps = NativeStackScreenProps<RootStackParamList, 'PrayerList'>;
+export type PrayerDetailScreenProps = NativeStackScreenProps<RootStackParamList, 'PrayerDetail'>;

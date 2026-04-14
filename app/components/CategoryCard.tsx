@@ -1,60 +1,77 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { StyleSheet, Text, View } from 'react-native';
+import { ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { PrayerCategory } from '@/app/types/prayer';
+import { getPrayerCount } from '@/app/data/prayers';
+import { PrayerSubcategory } from '@/app/types/prayer';
 import { AppTheme } from '@/constants/app-theme';
 
 type CategoryCardProps = {
-  item: PrayerCategory;
-  prayerCount: number;
+  item: PrayerSubcategory;
+  onPress: (item: PrayerSubcategory) => void;
 };
 
-export default function CategoryCard({ item, prayerCount }: CategoryCardProps) {
+export default function CategoryCard({ item, onPress }: CategoryCardProps) {
   return (
-    <View style={[styles.card, { backgroundColor: item.surface }]}>
-      <View style={[styles.iconBadge, { backgroundColor: item.tint }]}>
-        <MaterialCommunityIcons color={AppTheme.colors.background} name={item.icon as never} size={22} />
-      </View>
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.subtitle}>{item.subtitle}</Text>
-      <Text style={styles.count}>{prayerCount} prayers available offline</Text>
-    </View>
+    <Pressable accessibilityRole="button" onPress={handlePress} style={styles.pressable}>
+      <ImageBackground imageStyle={styles.image} source={item.image} style={styles.imageWrap}>
+        <View style={styles.overlay}>
+          <View style={styles.meta}>
+            <Text numberOfLines={2} style={styles.title}>
+              {item.title}
+            </Text>
+            <Text numberOfLines={2} style={styles.description}>
+              {item.description}
+            </Text>
+            <Text style={styles.count}>{getPrayerCount(item)} prayers</Text>
+          </View>
+        </View>
+      </ImageBackground>
+    </Pressable>
   );
+
+  function handlePress() {
+    onPress(item);
+  }
 }
 
 const styles = StyleSheet.create({
-  card: {
-    width: 220,
-    borderRadius: AppTheme.radius.lg,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.08)',
-    padding: AppTheme.spacing.md,
+  pressable: {
     marginRight: AppTheme.spacing.md,
-    gap: AppTheme.spacing.sm,
-    ...AppTheme.shadows.card,
   },
-  iconBadge: {
-    width: 44,
-    height: 44,
-    borderRadius: AppTheme.radius.pill,
-    alignItems: 'center',
-    justifyContent: 'center',
+  imageWrap: {
+    width: 236,
+    height: 292,
+    justifyContent: 'flex-end',
+  },
+  image: {
+    borderRadius: 16,
+  },
+  overlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    borderRadius: 16,
+    padding: AppTheme.spacing.md,
+    backgroundColor: 'rgba(0, 0, 0, 0.42)',
+  },
+  meta: {
+    gap: 6,
   },
   title: {
-    color: AppTheme.colors.white,
-    fontSize: 18,
-    fontWeight: '700',
+    color: AppTheme.colors.text,
+    fontSize: 22,
+    fontFamily: AppTheme.fonts.heading,
+    lineHeight: 28,
   },
-  subtitle: {
-    color: '#E7D9CB',
+  description: {
+    color: '#D0D0D0',
     fontSize: 13,
     lineHeight: 18,
-    minHeight: 54,
   },
   count: {
-    color: 'rgba(255,255,255,0.72)',
+    marginTop: 2,
+    color: AppTheme.colors.white,
     fontSize: 12,
-    fontWeight: '600',
-    marginTop: 'auto',
+    fontWeight: '700',
+    letterSpacing: 0.4,
+    textTransform: 'uppercase',
   },
 });
