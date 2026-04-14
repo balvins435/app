@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { FlatList, ListRenderItemInfo, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -11,38 +11,28 @@ import { HomeScreenProps, PrayerCategory, PrayerSubcategory } from '@/app/types/
 import { AppTheme } from '@/constants/app-theme';
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
-  const primaryCategory = useMemo(() => prayerCategories[0], []);
-
   const handleOpenSubcategory = useCallback(
-    (item: PrayerSubcategory) => {
-      if (!primaryCategory) {
-        return;
-      }
-
+    (categoryId: string, item: PrayerSubcategory) => {
       navigation.navigate('PrayerList', {
-        categoryId: primaryCategory.id,
+        categoryId,
         subcategoryId: item.id,
       });
     },
-    [navigation, primaryCategory],
+    [navigation],
   );
-
-  const handleOpenCategory = useCallback(() => {
-    if (!primaryCategory) {
-      return;
-    }
-
-    navigation.navigate('Category', {
-      categoryId: primaryCategory.id,
-    });
-  }, [navigation, primaryCategory]);
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <FlatList
         contentContainerStyle={styles.content}
-        data={primaryCategory ? [primaryCategory] : []}
+        data={prayerCategories}
         keyExtractor={categoryKeyExtractor}
+        ListHeaderComponent={
+          <View>
+            <HomeHeader />
+            <VerseCard reference={homeVerse.reference} verse={homeVerse.verse} />
+          </View>
+        }
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
       />
@@ -51,10 +41,11 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
 
   function renderItem({ item }: ListRenderItemInfo<PrayerCategory>) {
     return (
-      <View>
-        <HomeHeader />
-        <VerseCard reference={homeVerse.reference} verse={homeVerse.verse} />
-        <Pressable accessibilityRole="button" onPress={handleOpenCategory} style={styles.sectionPressable}>
+      <View style={styles.sectionBlock}>
+        <Pressable
+          accessibilityRole="button"
+          onPress={handleOpenCategory}
+          style={styles.sectionPressable}>
           <SectionHeader
             subtitle={item.description}
             title={item.title}
@@ -66,15 +57,26 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
           data={item.items}
           horizontal
           keyExtractor={subcategoryKeyExtractor}
-          renderItem={renderSubcategory}
+          renderItem={({ item: subcategory }) => renderSubcategory(item.id, subcategory)}
           showsHorizontalScrollIndicator={false}
         />
       </View>
     );
+
+    function handleOpenCategory() {
+      navigation.navigate('Category', {
+        categoryId: item.id,
+      });
+    }
   }
 
-  function renderSubcategory({ item }: ListRenderItemInfo<PrayerSubcategory>) {
-    return <CategoryCard item={item} onPress={handleOpenSubcategory} />;
+  function renderSubcategory(categoryId: string, item: PrayerSubcategory) {
+    return (
+      <CategoryCard
+        item={item}
+        onPress={(selectedItem) => handleOpenSubcategory(categoryId, selectedItem)}
+      />
+    );
   }
 }
 
@@ -174,6 +176,9 @@ const styles = StyleSheet.create({
   sectionPressable: {
     paddingHorizontal: AppTheme.spacing.lg,
     marginBottom: AppTheme.spacing.md,
+  },
+  sectionBlock: {
+    marginBottom: AppTheme.spacing.xl,
   },
   horizontalListContent: {
     paddingHorizontal: AppTheme.spacing.lg,

@@ -90,7 +90,7 @@ export const prayerCategories: PrayerCategory[] = [
   },
   {
     id: 'seasonal_prayers',
-    title: 'Seasonal Prayers',
+    title: 'Occasions & Intentions',
     description: 'Prayer companions for Easter, Lent, and the liturgical rhythm of the Church.',
     items: [
       {
@@ -114,8 +114,95 @@ export const prayerCategories: PrayerCategory[] = [
           },
         ],
       },
+      {
+
+        id: 'lent_prayers',
+        title: 'Lent',
+        description: 'Prayers for repentance, renewal, and spiritual growth during Lent.',
+        image: iconImage,
+        icon: 'moon-outline',
+        prayers: [
+          {
+            id: 'ash-wednesday',
+            title: 'Ash Wednesday Prayer',
+            content:
+              'Almighty and everlasting God, You hate nothing You have made and forgive the sins of all who are penitent. Create in me a clean heart, O God, and renew a right spirit within me. Cast me not away from Your presence, and take not Your Holy Spirit from me. Restore to me the joy of Your salvation, and uphold me with a willing spirit. Amen.',
+          },
+          {
+            id: 'st-francis-lent',
+            title: 'St. Francis Lent Prayer',
+            content:
+              'Lord, make me an instrument of Your peace; where there is hatred, let me sow love; where there is injury, pardon; where there is doubt, faith; where there is despair, hope; where there is darkness, light; and where there is sadness, joy. O Divine Master, grant that I may not so much seek to be consoled as to console; to be understood as to understand; to be loved as to love. For it is in giving that we receive; it is in pardoning that we are pardoned; and it is in dying that we are born to eternal life. Amen.',
+          },
+        ],
+
+      },
     ],
   },
+  {
+    id: 'catechism',
+    title: 'Catechism',
+    description: 'Prayers drawn from the rich teachings of the Catholic Church.',
+    items: [
+      {
+        id: 'basic_prayers',
+        title: 'Basic Prayers',
+        description: 'Essential prayers for daily spiritual life.',
+        image: iconImage,
+        icon: 'book-outline',
+        prayers: [
+          {
+            id: 'lord-prayer',
+            title: 'Lord\'s Prayer',
+            content:
+              'Our Father, who art in heaven, hallowed be Thy name; Thy kingdom come; Thy will be done on earth as it is in heaven. Give us this day our daily bread. And forgive us our trespasses, as we forgive those who trespass against us. And lead us not into temptation; but deliver us from evil. Amen.',
+          },
+          {
+            id: 'hail-mary',
+            title: 'Hail Mary',
+            content:
+              'Hail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.',
+          },
+          {
+            id: 'glory-be',
+            title: 'Glory Be',
+            content:
+              'Glory be to the Father, and to the Son, and to the Holy Spirit. As it was in the beginning, is now, and ever shall be, world without end. Amen.',    
+
+          },
+          {
+            id: 'nicene-creed',
+            title: 'Nicene Creed',
+            content:
+              'I believe in one God, the Father Almighty, Maker of heaven and earth, of all things visible and invisible. I believe in one Lord Jesus Christ, the Only Begotten Son of God, born of the Father before all ages; Light from Light, true God from true God; begotten, not made, consubstantial with the Father; through him all things were made. For us men and for our salvation he came down from heaven, and by the Holy Spirit was incarnate of the Virgin Mary, and became man. For our sake he was crucified under Pontius Pilate; He suffered  death and was buried; and  rose again on the third day in accordance with the Scriptures. He ascended into heaven, and  is seated at the right hand of the Father. He will come again, in glory, to judge the living and the dead; and his kingdom will have no end. I believe in the Holy Spirit, the Lord and the Giver of Life, who proceeds from the Father and the Son; who with the Father and the Son is adored and glorified; who has spoken through the prophets. I believe in one holy catholic and apostolic Church. I confess one baptism for the forgiveness of sins. And I look forward to the resurrection of the dead, and the life of the world to come. Amen.',
+          },
+          {
+            id: 'apostles-creed',
+            title: 'Apostles Creed',
+            content:
+              'I believe in God, the Father Almighty, Creator of heaven and earth. I believe in Jesus Christ, His only Son, our Lord. He was conceived by the Holy Spirit and born of the Virgin Mary. He suffered under Pontius Pilate, was crucified, died, and was buried. He descended into hell; on the third day He rose again from the dead; He ascended into heaven, and is seated at the right hand of God the Father Almighty; from there He will come to judge the living and the dead. I believe in the Holy Spirit, the holy catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen.',  
+          
+          },
+        ],
+        
+      },
+      {
+        id: 'catholic-doctrine',
+        title: 'Catholic Doctrine',
+        description: 'Prayers reflecting key teachings of the Church.',
+        image: iconImage,
+        icon: 'school-outline',
+        prayers: [
+          {
+            id: 'prayer-to-the-holy-spirit',
+            title: 'Prayer to the Holy Spirit',
+            content:
+              'Come, Holy Spirit, fill the hearts of Your faithful and kindle in them the fire of Your love. Send forth Your Spirit and they shall be created. And You shall renew the face of the earth. O God, who by the light of the Holy Spirit did instruct the hearts of the faithful, grant that by the same Holy Spirit we may be truly wise and ever enjoy His consolations. Through Christ our Lord. Amen.',
+          },
+        ],
+      }
+    ],
+  }
 ];
 
 export const homeVerse = {
