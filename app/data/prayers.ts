@@ -1,5 +1,6 @@
 import {
   LiturgicalSeason,
+  PrayerContentBlock,
   PrayerCategory,
   PrayerRecord,
   PrayerRoute,
@@ -18,6 +19,259 @@ const defaultReading = {
   minFontScale: 0.9,
   maxFontScale: 1.45,
 } as const;
+
+type RosaryMystery = {
+  order: string;
+  title: string;
+  fruit: string;
+  history: string;
+};
+
+function heading(text: string): PrayerContentBlock {
+  return { type: 'heading', text };
+}
+
+function subheading(text: string): PrayerContentBlock {
+  return { type: 'subheading', text };
+}
+
+function divider(): PrayerContentBlock {
+  return { type: 'divider' };
+}
+
+function paragraph(text: string): PrayerContentBlock {
+  return {
+    type: 'paragraph',
+    parts: [{ text }],
+  };
+}
+
+const apostlesCreed =
+  'I believe in God, the Father almighty, Creator of heaven and earth, and in Jesus Christ, His only Son, our Lord. He was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died, and was buried. He descended to the dead. On the third day He rose again. He ascended into heaven and is seated at the right hand of the Father. He will come again to judge the living and the dead. I believe in the Holy Spirit, the holy catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen.';
+
+const ourFather =
+  'Our Father, who art in heaven, hallowed be Thy name. Thy kingdom come. Thy will be done on earth as it is in heaven. Give us this day our daily bread, and forgive us our trespasses, as we forgive those who trespass against us. And lead us not into temptation, but deliver us from evil. Amen.';
+
+const hailMary =
+  'Hail Mary, full of grace, the Lord is with thee. Blessed art thou among women and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.';
+
+const gloryBe =
+  'Glory be to the Father, and to the Son, and to the Holy Spirit. As it was in the beginning, is now, and ever shall be, world without end. Amen.';
+
+const fatimaPrayer =
+  'O my Jesus, forgive us our sins, save us from the fires of hell, lead all souls to heaven, especially those in most need of Thy mercy. Amen.';
+
+const stMichaelPrayer =
+  'Saint Michael the Archangel, defend us in battle. Be our protection against the wickedness and snares of the devil. May God rebuke him, we humbly pray; and do thou, O Prince of the heavenly hosts, by the power of God, cast into hell Satan and all the evil spirits who prowl about the world seeking the ruin of souls. Amen.';
+
+const hailHolyQueen =
+  'Hail, Holy Queen, Mother of mercy, our life, our sweetness, and our hope. To thee do we cry, poor banished children of Eve. To thee do we send up our sighs, mourning and weeping in this valley of tears. Turn then, most gracious advocate, thine eyes of mercy toward us; and after this our exile show unto us the blessed fruit of thy womb, Jesus. O clement, O loving, O sweet Virgin Mary. Pray for us, O holy Mother of God, that we may be made worthy of the promises of Christ.';
+
+const rosaryFinalPrayer =
+  'O God, whose Only Begotten Son, by His life, death, and resurrection, has purchased for us the rewards of eternal life, grant, we beseech Thee, that while meditating upon these mysteries of the most holy Rosary of the Blessed Virgin Mary, we may imitate what they contain and obtain what they promise, through the same Christ our Lord. Amen.';
+
+function buildRosaryMysteryGuideContent(
+  setTitle: string,
+  dayLabel: string,
+  mysteries: RosaryMystery[],
+): PrayerContentBlock[] {
+  const blocks: PrayerContentBlock[] = [
+    heading(setTitle),
+    paragraph(
+      `${setTitle} are traditionally prayed on ${dayLabel}. Move slowly through the Rosary, allowing each mystery to lead you into the life of Christ through the eyes of Mary.`,
+    ),
+    divider(),
+    heading('How To Begin'),
+    paragraph(
+      'Start with the Sign of the Cross. Pray the Apostles’ Creed on the crucifix, one Our Father on the first bead, three Hail Marys on the next beads for faith, hope, and charity, and then the Glory Be before beginning the first decade.',
+    ),
+    subheading("Apostles' Creed"),
+    paragraph(apostlesCreed),
+    subheading('Our Father'),
+    paragraph(ourFather),
+    subheading('Hail Mary'),
+    paragraph(hailMary),
+    subheading('Glory Be'),
+    paragraph(gloryBe),
+    subheading('Fatima Prayer'),
+    paragraph(fatimaPrayer),
+    subheading('St. Michael Prayer'),
+    paragraph(stMichaelPrayer),
+    divider(),
+  ];
+
+  mysteries.forEach((mystery) => {
+    blocks.push(heading(`${mystery.order} Mystery: ${mystery.title}`));
+    blocks.push(subheading(`Fruit to pray for: ${mystery.fruit}`));
+    blocks.push(paragraph(mystery.history));
+    blocks.push(
+      paragraph(
+        'For this decade, announce the mystery, pray one Our Father, ten Hail Marys, the Glory Be, the Fatima Prayer, and then the St. Michael Prayer while asking for the grace connected to this mystery.',
+      ),
+    );
+    blocks.push(divider());
+  });
+
+  blocks.push(heading('Concluding Prayers'));
+  blocks.push(subheading('Hail Holy Queen'));
+  blocks.push(paragraph(hailHolyQueen));
+  blocks.push(subheading('Final Prayer'));
+  blocks.push(paragraph(rosaryFinalPrayer));
+
+  return blocks;
+}
+
+const joyfulMysteries: RosaryMystery[] = [
+  {
+    order: 'First Joyful',
+    title: 'The Annunciation',
+    fruit: 'Humility',
+    history:
+      'The angel Gabriel is sent to Nazareth and announces that Mary has been chosen to bear the Son of God. Mary listens with faith, asks how this will be, and then gives her complete yes: “Let it be done to me according to your word.” In this mystery we contemplate the hidden greatness of surrender and the beginning of the Incarnation.',
+  },
+  {
+    order: 'Second Joyful',
+    title: 'The Visitation',
+    fruit: 'Charity',
+    history:
+      'After receiving the angel’s message, Mary travels in haste to serve her cousin Elizabeth. At Mary’s greeting, John the Baptist leaps in Elizabeth’s womb and Elizabeth blesses Mary for believing. This mystery teaches us that true love moves outward quickly, carrying Christ to others through humble service.',
+  },
+  {
+    order: 'Third Joyful',
+    title: 'The Nativity',
+    fruit: 'Poverty of Spirit',
+    history:
+      'Jesus is born in Bethlehem in simplicity and poverty, laid in a manger because there was no room at the inn. Heaven rejoices and the shepherds come in wonder. In this mystery we learn to welcome Christ into our lives without clinging to comfort, status, or self-importance.',
+  },
+  {
+    order: 'Fourth Joyful',
+    title: 'The Presentation in the Temple',
+    fruit: 'Obedience',
+    history:
+      'Mary and Joseph present the child Jesus in the Temple according to the Law. Simeon recognizes Him as the promised light for the nations, while also foretelling the sorrow that will pierce Mary’s heart. This mystery teaches reverence, fidelity, and the grace of offering our lives back to God.',
+  },
+  {
+    order: 'Fifth Joyful',
+    title: 'The Finding of Jesus in the Temple',
+    fruit: 'Joy in Seeking Jesus',
+    history:
+      'After three anxious days, Mary and Joseph find Jesus in the Temple among the teachers, listening and asking questions. Even in their distress, they are drawn deeper into the mystery of His mission. This mystery teaches us to seek Christ perseveringly when He seems hidden and to find joy in returning to Him.',
+  },
+];
+
+const sorrowfulMysteries: RosaryMystery[] = [
+  {
+    order: 'First Sorrowful',
+    title: 'The Agony in the Garden',
+    fruit: 'Contrition and Trust in God',
+    history:
+      'In Gethsemane, Jesus enters into deep anguish as He accepts the cup of suffering for the salvation of the world. He prays in obedience: “Not my will, but yours be done.” This mystery invites us to bring our fear and weakness honestly before God and to choose trust even in darkness.',
+  },
+  {
+    order: 'Second Sorrowful',
+    title: 'The Scourging at the Pillar',
+    fruit: 'Purity and Self-Mastery',
+    history:
+      'Jesus is cruelly scourged after Pilate gives Him over to satisfy the crowd. Though innocent, He endures physical humiliation and pain out of love for sinners. This mystery teaches us reverence for the dignity of the body and the grace to resist sin with discipline and purity.',
+  },
+  {
+    order: 'Third Sorrowful',
+    title: 'The Crowning with Thorns',
+    fruit: 'Moral Courage',
+    history:
+      'The soldiers mock Jesus as king, pressing thorns upon His head and ridiculing His authority. The world rejects the truth, yet Christ remains steady in silence and love. This mystery teaches courage, purity of intention, and faithfulness when following Christ is costly.',
+  },
+  {
+    order: 'Fourth Sorrowful',
+    title: 'The Carrying of the Cross',
+    fruit: 'Patience',
+    history:
+      'Jesus carries the cross toward Calvary, weakened by suffering yet continuing the road of love. Simon helps bear the burden, and Veronica offers a gesture of compassion. This mystery teaches us to carry daily crosses patiently and to assist others without turning away from their pain.',
+  },
+  {
+    order: 'Fifth Sorrowful',
+    title: 'The Crucifixion',
+    fruit: 'Perseverance in Love',
+    history:
+      'Jesus is nailed to the cross and gives His life completely for the redemption of the world. From the cross He forgives, entrusts Mary to the beloved disciple, and surrenders His spirit to the Father. This mystery teaches sacrificial love, mercy, and steadfastness to the very end.',
+  },
+];
+
+const gloriousMysteries: RosaryMystery[] = [
+  {
+    order: 'First Glorious',
+    title: 'The Resurrection',
+    fruit: 'Faith',
+    history:
+      'On the third day, Jesus rises from the dead in glory, conquering sin and death forever. The empty tomb becomes the sign that suffering and loss do not have the final word. This mystery strengthens our faith that Christ is truly alive and that new life is possible even after deep sorrow.',
+  },
+  {
+    order: 'Second Glorious',
+    title: 'The Ascension',
+    fruit: 'Hope',
+    history:
+      'Forty days after the Resurrection, Jesus ascends to the Father and promises to remain with His Church. The disciples are sent outward in mission with their eyes fixed on heaven. This mystery teaches us to live with hope, remembering that our true homeland is with God.',
+  },
+  {
+    order: 'Third Glorious',
+    title: 'The Descent of the Holy Spirit',
+    fruit: 'Zeal for Souls',
+    history:
+      'At Pentecost the Holy Spirit descends upon Mary and the apostles as tongues of fire. Fear gives way to courage, and the Church begins her mission to preach Christ to the nations. This mystery teaches openness to grace, bold witness, and missionary charity.',
+  },
+  {
+    order: 'Fourth Glorious',
+    title: 'The Assumption of Mary',
+    fruit: 'Desire for Heaven',
+    history:
+      'At the end of her earthly life, Mary is assumed body and soul into heavenly glory. Her Assumption is a sign of the destiny prepared for those who remain faithful to Christ. This mystery teaches purity of heart and a living desire for eternal union with God.',
+  },
+  {
+    order: 'Fifth Glorious',
+    title: 'The Coronation of Mary',
+    fruit: 'Trust in Mary’s Intercession',
+    history:
+      'Mary is crowned Queen of Heaven and Earth, sharing in the triumph of her Son. Her queenship is maternal, drawing souls to Christ rather than to herself. This mystery teaches confidence in her intercession and the hope of sharing one day in the communion of saints.',
+  },
+];
+
+const luminousMysteries: RosaryMystery[] = [
+  {
+    order: 'First Luminous',
+    title: 'The Baptism of Jesus in the Jordan',
+    fruit: 'Openness to the Holy Spirit',
+    history:
+      'Jesus enters the waters of the Jordan, though He is without sin, and the Father reveals Him as the beloved Son while the Spirit descends like a dove. This mystery reveals the Trinity and the beginning of Christ’s public ministry. We pray for renewed baptismal grace and openness to the Spirit.',
+  },
+  {
+    order: 'Second Luminous',
+    title: 'The Wedding at Cana',
+    fruit: 'Trust in Mary’s Intercession',
+    history:
+      'At Mary’s request, Jesus performs His first public sign by changing water into wine at Cana. The disciples begin to believe more deeply in Him through this act of merciful abundance. This mystery teaches confidence in Mary’s care and obedience to Christ’s command: “Do whatever He tells you.”',
+  },
+  {
+    order: 'Third Luminous',
+    title: 'The Proclamation of the Kingdom',
+    fruit: 'Conversion',
+    history:
+      'Jesus travels through towns and villages preaching repentance, healing the sick, forgiving sinners, and announcing that the Kingdom of God is at hand. This mystery calls each person to turn away from sin and to live under the reign of God with sincerity and courage.',
+  },
+  {
+    order: 'Fourth Luminous',
+    title: 'The Transfiguration',
+    fruit: 'Desire for Holiness',
+    history:
+      'On Mount Tabor, Jesus is transfigured before Peter, James, and John, and His divine glory shines forth while the Father commands them to listen to Him. This mystery strengthens the disciples for the scandal of the cross and gives a glimpse of resurrection glory. We pray for holiness and deeper attentiveness to Christ.',
+  },
+  {
+    order: 'Fifth Luminous',
+    title: 'The Institution of the Eucharist',
+    fruit: 'Love for the Eucharist',
+    history:
+      'At the Last Supper, Jesus gives His Body and Blood to the Church under the signs of bread and wine, establishing the Eucharist as the sacrament of His abiding presence. This mystery teaches reverence, gratitude, and deeper love for the Mass and for Holy Communion.',
+  },
+];
 
 export const prayerCategories: PrayerCategory[] = [
   {
@@ -227,6 +481,110 @@ export const prayerCategories: PrayerCategory[] = [
             season: 'ordinary_time',
             estimatedDuration: '1 min',
             searchTerms: ['fatima prayer', 'rosary decade', 'mercy'],
+            reading: defaultReading,
+          },
+          {
+            id: 'holy-rosary-selector',
+            title: 'The Holy Rosary',
+            subtitle: 'Choose the mystery set for the day',
+            excerpt: 'Open the mystery guide that matches today and pray each decade step by step.',
+            content:
+              'Select the mystery set for the day and follow the step-by-step guide with all five mysteries.',
+            tags: ['Rosary', 'Mysteries', 'Guide'],
+            season: 'ordinary_time',
+            estimatedDuration: '20 min',
+            searchTerms: ['holy rosary', 'joyful', 'sorrowful', 'glorious', 'luminous'],
+            reading: defaultReading,
+            selectorPrompt: 'Select',
+            selectorOptions: [
+              {
+                label: 'Joyful (Monday, Saturday)',
+                prayerId: 'joyful-mysteries-guide',
+              },
+              {
+                label: 'Sorrowful (Tuesday, Friday)',
+                prayerId: 'sorrowful-mysteries-guide',
+              },
+              {
+                label: 'Glorious (Wednesday, Sunday)',
+                prayerId: 'glorious-mysteries-guide',
+              },
+              {
+                label: 'Luminous (Thursday)',
+                prayerId: 'luminous-mysteries-guide',
+              },
+            ],
+          },
+          {
+            id: 'joyful-mysteries-guide',
+            title: 'Joyful Mysteries',
+            subtitle: 'Monday and Saturday',
+            excerpt: 'Pray the Joyful Mysteries with a guided sequence and meditation focus.',
+            content:
+              'Pray the Joyful Mysteries while meditating on the Annunciation, Visitation, Nativity, Presentation, and Finding in the Temple.',
+            contentBlocks: buildRosaryMysteryGuideContent(
+              'The Joyful Mysteries',
+              'Monday and Saturday',
+              joyfulMysteries,
+            ),
+            tags: ['Rosary', 'Joyful Mysteries', 'Guide'],
+            season: 'ordinary_time',
+            estimatedDuration: '20 min',
+            searchTerms: ['joyful mysteries', 'annunciation', 'visitation', 'nativity', 'presentation', 'finding in the temple'],
+            reading: defaultReading,
+          },
+          {
+            id: 'sorrowful-mysteries-guide',
+            title: 'Sorrowful Mysteries',
+            subtitle: 'Tuesday and Friday',
+            excerpt: 'Pray the Sorrowful Mysteries with meditation on the Passion of Christ.',
+            content:
+              'Pray the Sorrowful Mysteries while meditating on the Agony, Scourging, Crowning, Carrying of the Cross, and Crucifixion.',
+            contentBlocks: buildRosaryMysteryGuideContent(
+              'The Sorrowful Mysteries',
+              'Tuesday and Friday',
+              sorrowfulMysteries,
+            ),
+            tags: ['Rosary', 'Sorrowful Mysteries', 'Guide'],
+            season: 'lent',
+            estimatedDuration: '20 min',
+            searchTerms: ['sorrowful mysteries', 'agony in the garden', 'scourging', 'crowning with thorns', 'carrying the cross', 'crucifixion'],
+            reading: defaultReading,
+          },
+          {
+            id: 'glorious-mysteries-guide',
+            title: 'Glorious Mysteries',
+            subtitle: 'Wednesday and Sunday',
+            excerpt: 'Pray the Glorious Mysteries with meditation on Resurrection glory.',
+            content:
+              'Pray the Glorious Mysteries while meditating on the Resurrection, Ascension, Descent of the Holy Spirit, Assumption, and Coronation of Mary.',
+            contentBlocks: buildRosaryMysteryGuideContent(
+              'The Glorious Mysteries',
+              'Wednesday and Sunday',
+              gloriousMysteries,
+            ),
+            tags: ['Rosary', 'Glorious Mysteries', 'Guide'],
+            season: 'easter',
+            estimatedDuration: '20 min',
+            searchTerms: ['glorious mysteries', 'resurrection', 'ascension', 'holy spirit', 'assumption', 'coronation'],
+            reading: defaultReading,
+          },
+          {
+            id: 'luminous-mysteries-guide',
+            title: 'Luminous Mysteries',
+            subtitle: 'Thursday',
+            excerpt: 'Pray the Luminous Mysteries with meditation on Christ’s public ministry.',
+            content:
+              'Pray the Luminous Mysteries while meditating on the Baptism of Jesus, Wedding at Cana, Proclamation of the Kingdom, Transfiguration, and Institution of the Eucharist.',
+            contentBlocks: buildRosaryMysteryGuideContent(
+              'The Luminous Mysteries',
+              'Thursday',
+              luminousMysteries,
+            ),
+            tags: ['Rosary', 'Luminous Mysteries', 'Guide'],
+            season: 'ordinary_time',
+            estimatedDuration: '20 min',
+            searchTerms: ['luminous mysteries', 'baptism of jesus', 'wedding at cana', 'transfiguration', 'eucharist'],
             reading: defaultReading,
           },
         ],

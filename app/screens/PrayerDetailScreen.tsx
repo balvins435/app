@@ -222,6 +222,18 @@ type ContentBlockProps = {
 };
 
 function ContentBlock({ block, bodyFontSize }: ContentBlockProps) {
+  if (block.type === 'heading') {
+    return <Text style={styles.sectionHeading}>{block.text}</Text>;
+  }
+
+  if (block.type === 'subheading') {
+    return <Text style={styles.sectionSubheading}>{block.text}</Text>;
+  }
+
+  if (block.type === 'divider') {
+    return <View style={styles.sectionDivider} />;
+  }
+
   if (block.type === 'numbered-list') {
     return (
       <View style={styles.listBlock}>
@@ -245,7 +257,12 @@ function ContentBlock({ block, bodyFontSize }: ContentBlockProps) {
   }
 
   return (
-    <Text style={[styles.body, { fontSize: bodyFontSize, lineHeight: bodyFontSize * 1.75 }]}>
+    <Text
+      style={[
+        styles.body,
+        styles.paragraphBlock,
+        { fontSize: bodyFontSize, lineHeight: bodyFontSize * 1.75 },
+      ]}>
       {block.parts.map((part, index) => (
         <InlinePart key={`paragraph-${index}`} part={part} />
       ))}
@@ -390,6 +407,29 @@ const styles = StyleSheet.create({
   },
   body: {
     color: '#E0E0E0',
+  },
+  paragraphBlock: {
+    marginBottom: AppTheme.spacing.md,
+  },
+  sectionHeading: {
+    color: AppTheme.colors.accentStrong,
+    fontSize: 24,
+    lineHeight: 30,
+    fontFamily: AppTheme.fonts.heading,
+    marginTop: 4,
+    marginBottom: 10,
+  },
+  sectionSubheading: {
+    color: AppTheme.colors.text,
+    fontSize: 18,
+    lineHeight: 24,
+    fontWeight: '700',
+    marginBottom: 6,
+  },
+  sectionDivider: {
+    height: 1,
+    backgroundColor: AppTheme.colors.border,
+    marginVertical: AppTheme.spacing.md,
   },
   listBlock: {
     gap: AppTheme.spacing.md,

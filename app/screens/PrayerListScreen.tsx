@@ -1,13 +1,15 @@
-import { useLayoutEffect, useMemo } from 'react';
+import { useLayoutEffect, useMemo, useState } from 'react';
 import { FlatList, ImageBackground, ListRenderItemInfo, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import PrayerSelectorSheet from '@/app/components/PrayerSelectorSheet';
 import PrayerListItem from '@/app/components/PrayerListItem';
 import { getCategoryById, getSubcategoryById } from '@/app/data/prayers';
-import { Prayer, PrayerListScreenProps } from '@/app/types/prayer';
+import { Prayer, PrayerListScreenProps, PrayerSelectorOption } from '@/app/types/prayer';
 import { AppTheme } from '@/constants/app-theme';
 
 export default function PrayerListScreen({ navigation, route }: PrayerListScreenProps) {
+  const [selectorPrayer, setSelectorPrayer] = useState<Prayer | null>(null);
   const category = useMemo(
     () => getCategoryById(route.params.categoryId),
     [route.params.categoryId],
@@ -27,26 +29,36 @@ export default function PrayerListScreen({ navigation, route }: PrayerListScreen
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.safeArea}>
-      <FlatList
-        contentContainerStyle={styles.content}
-        data={prayers}
-        ItemSeparatorComponent={ItemSeparator}
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-        showsVerticalScrollIndicator={false}
-        ListHeaderComponent={
-          <View style={styles.headerBlock}>
-            <ImageBackground imageStyle={styles.heroImage} source={subcategory?.image} style={styles.hero}>
-              <View style={styles.heroOverlay}>
-                <Text style={styles.eyebrow}>{category?.title}</Text>
-                <Text style={styles.heroTitle}>{subcategory?.title}</Text>
-                <Text style={styles.heroDescription}>{subcategory?.description}</Text>
-                <Text style={styles.heroMeta}>{subcategory?.featuredLabel}</Text>
-              </View>
-            </ImageBackground>
-          </View>
-        }
-      />
+      <>
+        <FlatList
+          contentContainerStyle={styles.content}
+          data={prayers}
+          ItemSeparatorComponent={ItemSeparator}
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={false}
+          ListHeaderComponent={
+            <View style={styles.headerBlock}>
+              <ImageBackground imageStyle={styles.heroImage} source={subcategory?.image} style={styles.hero}>
+                <View style={styles.heroOverlay}>
+                  <Text style={styles.eyebrow}>{category?.title}</Text>
+                  <Text style={styles.heroTitle}>{subcategory?.title}</Text>
+                  <Text style={styles.heroDescription}>{subcategory?.description}</Text>
+                  <Text style={styles.heroMeta}>{subcategory?.featuredLabel}</Text>
+                </View>
+              </ImageBackground>
+            </View>
+          }
+        />
+        <PrayerSelectorSheet
+          onClose={handleCloseSelector}
+          onSelect={handleSelectOption}
+          options={selectorPrayer?.selectorOptions ?? []}
+          prompt={selectorPrayer?.selectorPrompt ?? 'Select'}
+          title={selectorPrayer?.title ?? 'Prayer'}
+          visible={Boolean(selectorPrayer)}
+        />
+      </>
     </SafeAreaView>
   );
 
@@ -55,10 +67,28 @@ export default function PrayerListScreen({ navigation, route }: PrayerListScreen
   }
 
   function handlePress(prayer: Prayer) {
+    if (prayer.selectorOptions?.length) {
+      setSelectorPrayer(prayer);
+      return;
+    }
+
     navigation.navigate('PrayerDetail', {
       categoryId: route.params.categoryId,
       subcategoryId: route.params.subcategoryId,
       prayerId: prayer.id,
+    });
+  }
+
+  function handleCloseSelector() {
+    setSelectorPrayer(null);
+  }
+
+  function handleSelectOption(option: PrayerSelectorOption) {
+    setSelectorPrayer(null);
+    navigation.navigate('PrayerDetail', {
+      categoryId: route.params.categoryId,
+      subcategoryId: route.params.subcategoryId,
+      prayerId: option.prayerId,
     });
   }
 }

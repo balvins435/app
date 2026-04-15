@@ -26,6 +26,17 @@ export type PrayerInlinePart = {
 
 export type PrayerContentBlock =
   | {
+      type: 'heading';
+      text: string;
+    }
+  | {
+      type: 'subheading';
+      text: string;
+    }
+  | {
+      type: 'divider';
+    }
+  | {
       type: 'paragraph';
       parts: PrayerInlinePart[];
     }
@@ -33,6 +44,11 @@ export type PrayerContentBlock =
       type: 'numbered-list';
       items: PrayerInlinePart[][];
     };
+
+export type PrayerSelectorOption = {
+  label: string;
+  prayerId: string;
+};
 
 export type Prayer = {
   id: string;
@@ -48,6 +64,8 @@ export type Prayer = {
   searchTerms: string[];
   reading: PrayerReadingConfig;
   contentBlocks?: PrayerContentBlock[];
+  selectorPrompt?: string;
+  selectorOptions?: PrayerSelectorOption[];
 };
 
 export type PrayerSubcategory = {
