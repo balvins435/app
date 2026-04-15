@@ -16,7 +16,11 @@ import {
   getSeasonLabel,
 } from '@/app/data/prayers';
 import { usePrayerApp } from '@/app/state/PrayerAppContext';
-import { PrayerDetailScreenProps } from '@/app/types/prayer';
+import {
+  PrayerContentBlock,
+  PrayerDetailScreenProps,
+  PrayerInlinePart,
+} from '@/app/types/prayer';
 import { AppTheme } from '@/constants/app-theme';
 
 export default function PrayerDetailScreen({ navigation, route }: PrayerDetailScreenProps) {
@@ -150,9 +154,19 @@ export default function PrayerDetailScreen({ navigation, route }: PrayerDetailSc
         </View>
 
         <View style={[styles.bodyWrap, readingMode === 'focused' && styles.bodyWrapFocused]}>
-          <Text style={[styles.body, { fontSize: bodyFontSize, lineHeight: bodyFontSize * 1.75 }]}>
-            {prayer?.content ?? 'This prayer is not available offline yet.'}
-          </Text>
+          {prayer?.contentBlocks?.length ? (
+            prayer.contentBlocks.map((block, index) => (
+              <ContentBlock
+                key={`${prayer.id}-${index}`}
+                block={block}
+                bodyFontSize={bodyFontSize}
+              />
+            ))
+          ) : (
+            <Text style={[styles.body, { fontSize: bodyFontSize, lineHeight: bodyFontSize * 1.75 }]}>
+              {prayer?.content ?? 'This prayer is not available offline yet.'}
+            </Text>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -200,6 +214,55 @@ export default function PrayerDetailScreen({ navigation, route }: PrayerDetailSc
 
     setTeleprompterOn((current) => !current);
   }
+}
+
+type ContentBlockProps = {
+  block: PrayerContentBlock;
+  bodyFontSize: number;
+};
+
+function ContentBlock({ block, bodyFontSize }: ContentBlockProps) {
+  if (block.type === 'numbered-list') {
+    return (
+      <View style={styles.listBlock}>
+        {block.items.map((parts, index) => (
+          <View key={`item-${index + 1}`} style={styles.listRow}>
+            <Text style={[styles.listNumber, { fontSize: bodyFontSize }]}>{`${index + 1}.`}</Text>
+            <Text
+              style={[
+                styles.body,
+                styles.listText,
+                { fontSize: bodyFontSize, lineHeight: bodyFontSize * 1.7 },
+              ]}>
+              {parts.map((part, partIndex) => (
+                <InlinePart key={`part-${partIndex}`} part={part} />
+              ))}
+            </Text>
+          </View>
+        ))}
+      </View>
+    );
+  }
+
+  return (
+    <Text style={[styles.body, { fontSize: bodyFontSize, lineHeight: bodyFontSize * 1.75 }]}>
+      {block.parts.map((part, index) => (
+        <InlinePart key={`paragraph-${index}`} part={part} />
+      ))}
+    </Text>
+  );
+}
+
+function InlinePart({ part }: { part: PrayerInlinePart }) {
+  return (
+    <Text
+      style={[
+        part.highlight && styles.highlightText,
+        part.strong && styles.strongText,
+      ]}>
+      {part.text}
+    </Text>
+  );
 }
 
 type ToolButtonProps = {
@@ -327,5 +390,26 @@ const styles = StyleSheet.create({
   },
   body: {
     color: '#E0E0E0',
+  },
+  listBlock: {
+    gap: AppTheme.spacing.md,
+  },
+  listRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  listNumber: {
+    width: 34,
+    color: AppTheme.colors.text,
+    fontWeight: '500',
+  },
+  listText: {
+    flex: 1,
+  },
+  highlightText: {
+    color: '#FF78A8',
+  },
+  strongText: {
+    fontWeight: '700',
   },
 });

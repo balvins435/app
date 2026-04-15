@@ -141,6 +141,73 @@ export const prayerCategories: PrayerCategory[] = [
             excerpt: 'Move through the decades with the Apostles’ Creed, Our Father, Hail Marys, and Glory Be.',
             content:
               'Begin with the Sign of the Cross and the Apostles’ Creed. On the first large bead pray the Our Father. On the next three beads pray three Hail Marys for faith, hope, and charity. Pray the Glory Be, announce the first mystery, pray the Our Father, then ten Hail Marys, the Glory Be, and the Fatima Prayer. Continue through all five mysteries and conclude with the Hail Holy Queen and final prayer.',
+            contentBlocks: [
+              {
+                type: 'numbered-list',
+                items: [
+                  [
+                    { text: 'Make the sign of the cross and say the ' },
+                    { text: '"Apostles\' Creed."', highlight: true, strong: true },
+                  ],
+                  [
+                    { text: 'Say the ' },
+                    { text: '"Our Father."', highlight: true, strong: true },
+                  ],
+                  [
+                    { text: 'Say three ' },
+                    { text: '"Hail Marys."', highlight: true, strong: true },
+                  ],
+                  [
+                    { text: 'Say the ' },
+                    { text: '"Glory be to the Father."', highlight: true, strong: true },
+                  ],
+                  [
+                    { text: 'Announce the First Mystery; then say the ' },
+                    { text: '"Our Father."', highlight: true, strong: true },
+                  ],
+                  [
+                    { text: 'Say ten ' },
+                    { text: "Hail Mary's", highlight: true, strong: true },
+                    { text: ' while meditating on the Mystery.' },
+                  ],
+                  [
+                    { text: 'Say the ' },
+                    { text: '"Glory be to the Father."', highlight: true, strong: true },
+                  ],
+                  [
+                    { text: 'After each decade say the ' },
+                    { text: '"Fatima Prayer"', highlight: true, strong: true },
+                    { text: ' requested by the Blessed Virgin Mary' },
+                    { text: ' and the ' },
+                    { text: '"St. Michael Prayer"', highlight: true, strong: true },
+                  ],
+                  [
+                    { text: 'Announce the Second Mystery; then say the ' },
+                    { text: '"Our Father."', highlight: true, strong: true },
+                    {
+                      text:
+                        ' Repeat 6, 7 and 8 and continue with the Third, Fourth and Fifth Mysteries in the same manner.',
+                    },
+                  ],
+                  [
+                    { text: 'Say the ' },
+                    { text: '"Hail, Holy Queen"', highlight: true, strong: true },
+                    { text: ' after the five decades are completed.' },
+                  ],
+                  [
+                    { text: 'As a general rule, the ' },
+                    { text: 'JOYFUL MYSTERIES', strong: true },
+                    { text: ' are said on Monday and Saturday; the ' },
+                    { text: 'SORROWFUL MYSTERIES', strong: true },
+                    { text: ' on Tuesday and Friday; the ' },
+                    { text: 'GLORIOUS MYSTERIES', strong: true },
+                    { text: ' on Wednesday and Sunday; the ' },
+                    { text: 'LUMINOUS MYSTERIES', strong: true },
+                    { text: ' on Thursday.' },
+                  ],
+                ],
+              },
+            ],
             tags: ['Rosary', 'Guide', 'Marian'],
             season: 'ordinary_time',
             estimatedDuration: '5 min',

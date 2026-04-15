@@ -18,6 +18,22 @@ export type PrayerReadingConfig = {
   maxFontScale: number;
 };
 
+export type PrayerInlinePart = {
+  text: string;
+  highlight?: boolean;
+  strong?: boolean;
+};
+
+export type PrayerContentBlock =
+  | {
+      type: 'paragraph';
+      parts: PrayerInlinePart[];
+    }
+  | {
+      type: 'numbered-list';
+      items: PrayerInlinePart[][];
+    };
+
 export type Prayer = {
   id: string;
   title: string;
@@ -31,6 +47,7 @@ export type Prayer = {
   defaultFavorite?: boolean;
   searchTerms: string[];
   reading: PrayerReadingConfig;
+  contentBlocks?: PrayerContentBlock[];
 };
 
 export type PrayerSubcategory = {
