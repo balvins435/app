@@ -41,6 +41,7 @@ export default function PrayerListScreen({ navigation, route }: PrayerListScreen
                 <Text style={styles.eyebrow}>{category?.title}</Text>
                 <Text style={styles.heroTitle}>{subcategory?.title}</Text>
                 <Text style={styles.heroDescription}>{subcategory?.description}</Text>
+                <Text style={styles.heroMeta}>{subcategory?.featuredLabel}</Text>
               </View>
             </ImageBackground>
           </View>
@@ -116,6 +117,14 @@ const styles = StyleSheet.create({
     color: '#D7D7D7',
     fontSize: 14,
     lineHeight: 21,
+  },
+  heroMeta: {
+    marginTop: 12,
+    color: AppTheme.colors.accentStrong,
+    fontSize: 12,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 0.8,
   },
   separator: {
     height: AppTheme.spacing.md,

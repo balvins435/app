@@ -1,28 +1,27 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { Prayer } from '@/app/types/prayer';
+import { PrayerSubcategory } from '@/app/types/prayer';
 import { AppTheme } from '@/constants/app-theme';
 
-type PrayerListItemProps = {
-  prayer: Prayer;
-  onPress: (prayer: Prayer) => void;
+type CollectionListItemProps = {
+  item: PrayerSubcategory;
+  onPress: (item: PrayerSubcategory) => void;
 };
 
-export default function PrayerListItem({ prayer, onPress }: PrayerListItemProps) {
+export default function CollectionListItem({ item, onPress }: CollectionListItemProps) {
   return (
     <Pressable accessibilityRole="button" onPress={handlePress} style={styles.card}>
-      <View style={styles.row}>
+      <View style={styles.leading}>
         <View style={styles.iconWrap}>
-          <Ionicons color={AppTheme.colors.accentStrong} name="document-text-outline" size={20} />
+          <Ionicons color={AppTheme.colors.accentStrong} name={item.icon as never} size={18} />
         </View>
         <View style={styles.copy}>
-          <Text numberOfLines={2} style={styles.title}>
-            {prayer.title}
+          <Text style={styles.title}>{item.title}</Text>
+          <Text numberOfLines={2} style={styles.subtitle}>
+            {item.description}
           </Text>
-          <Text numberOfLines={1} style={styles.subtitle}>
-            {prayer.subtitle}
-          </Text>
+          <Text style={styles.meta}>{item.prayers.length} prayers</Text>
         </View>
       </View>
       <Ionicons color={AppTheme.colors.textMuted} name="chevron-forward" size={18} />
@@ -30,32 +29,31 @@ export default function PrayerListItem({ prayer, onPress }: PrayerListItemProps)
   );
 
   function handlePress() {
-    onPress(prayer);
+    onPress(item);
   }
 }
 
 const styles = StyleSheet.create({
   card: {
     backgroundColor: AppTheme.colors.card,
-    borderRadius: 16,
+    borderRadius: 18,
     borderWidth: 1,
     borderColor: AppTheme.colors.border,
-    paddingHorizontal: AppTheme.spacing.md,
-    paddingVertical: 16,
+    padding: AppTheme.spacing.md,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: AppTheme.spacing.md,
   },
-  row: {
+  leading: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     gap: 14,
   },
   iconWrap: {
-    width: 42,
-    height: 42,
+    width: 44,
+    height: 44,
     borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
@@ -66,13 +64,20 @@ const styles = StyleSheet.create({
   },
   title: {
     color: AppTheme.colors.text,
-    fontSize: 15,
-    fontWeight: '600',
-    lineHeight: 22,
+    fontSize: 16,
+    fontWeight: '700',
     marginBottom: 4,
   },
   subtitle: {
     color: AppTheme.colors.textMuted,
     fontSize: 13,
+    lineHeight: 18,
+  },
+  meta: {
+    marginTop: 8,
+    color: AppTheme.colors.accentStrong,
+    fontSize: 12,
+    fontWeight: '700',
+    textTransform: 'uppercase',
   },
 });

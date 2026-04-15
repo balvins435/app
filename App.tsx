@@ -1,5 +1,10 @@
-import AppNavigator from "./app/navigation/AppNavigator";
+import AppNavigator from './app/navigation/AppNavigator';
+import { PrayerAppProvider } from '@/app/state/PrayerAppContext';
 
 export default function App() {
-  return <AppNavigator />;
+  return (
+    <PrayerAppProvider>
+      <AppNavigator />
+    </PrayerAppProvider>
+  );
 }

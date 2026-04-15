@@ -2,7 +2,7 @@ import { useLayoutEffect, useMemo } from 'react';
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import PrayerCard from '@/app/components/PrayerCard';
+import CollectionListItem from '@/app/components/CollectionListItem';
 import SectionHeader from '@/app/components/SectionHeader';
 import { getCategoryById } from '@/app/data/prayers';
 import { CategoryScreenProps, PrayerSubcategory } from '@/app/types/prayer';
@@ -44,24 +44,16 @@ export default function CategoryScreen({ navigation, route }: CategoryScreenProp
   function renderItem({ item }: ListRenderItemInfo<PrayerSubcategory>) {
     return (
       <View style={styles.cardWrap}>
-        <PrayerCard onPress={handlePress} prayer={toPreviewPrayer(item)} />
+        <CollectionListItem item={item} onPress={handlePress} />
       </View>
     );
   }
 
-  function handlePress(prayer: { id: string }) {
+  function handlePress(collection: PrayerSubcategory) {
     navigation.navigate('PrayerList', {
       categoryId: route.params.categoryId,
-      subcategoryId: prayer.id,
+      subcategoryId: collection.id,
     });
-  }
-
-  function toPreviewPrayer(item: PrayerSubcategory) {
-    return {
-      id: item.id,
-      title: item.title,
-      content: item.description,
-    };
   }
 }
 
