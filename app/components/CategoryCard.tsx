@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
     marginRight: AppTheme.spacing.md,
   },
   imageWrap: {
-    width: 236,
-    height: 292,
+    width: 140,
+    height: 150,
     justifyContent: 'flex-end',
   },
   image: {
