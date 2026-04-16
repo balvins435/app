@@ -9,7 +9,7 @@ import {
 } from '@/app/types/prayer';
 
 const jesusImage = require('../../assets/jesus.jpg');
-const glowImage = require('../../assets/images/splash-icon.png');
+const glowImage = require('../../assets/rosary.jpeg');
 const iconImage = require('../../assets/images/icon.png');
 const seasonalImage = require('../../assets/images/android-icon-foreground.png');
 
@@ -378,6 +378,7 @@ export const prayerCategories: PrayerCategory[] = [
     title: 'Rosary',
     description: 'Guided mysteries, Marian prayers, and devotions centered on the life of Christ.',
     icon: 'flower-outline',
+    
     items: [
       {
         id: 'rosary_basics',
