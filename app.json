@@ -19,7 +19,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.balvins.prayerapp"
     },
     "web": {
       "output": "static",
@@ -38,6 +39,11 @@
     ],
     "experiments": {
       "reactCompiler": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ed1b2f30-f1f8-4fb0-891f-45a0ed8072d8"
+      }
     }
   }
 }
