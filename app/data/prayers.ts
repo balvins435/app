@@ -823,6 +823,31 @@ export const prayerCategories: PrayerCategory[] = [
           },
         ],
       },
+      {
+        id: 'saintly-healing',
+        title: 'Healing',
+        description: 'Saintly prayers for healing',
+        image: glowImage,
+        icon: 'shield-outline',
+        season: 'ordinary_time',
+        featuredLabel: 'Healing prayers',
+        prayers: [
+          {
+            id: 'st-rafael-prayer',
+            title: 'Prayer to St. Raphael',
+            subtitle: 'A prayer for healing and guidance',
+            excerpt: 'Ask St. Raphael, patron of healing and travelers, for help and protection.',
+            content:
+              'Glorious Archangel St. Raphael, great prince of the heavenly court, you are illustrious for your gifts of wisdom and grace. You are a guide of those who journey by land or sea or air, consoler of the afflicted, and refuge of sinners. I beg you, assist me in all my needs and in all the sufferings of this life, as once you helped the young Tobias on his travels. Because you are the medicine of God, I humbly pray you to heal the many infirmities of my soul and the ills that afflict my body. I especially ask of you the favor (mention your request here). Guide me, I pray, in all my undertakings, and dispose my days in peace. Amen.',
+            tags: ['Saints', 'Healing', 'St. Raphael'],
+            season: 'ordinary_time',
+            estimatedDuration: '3 min',
+            searchTerms: ['st raphael', 'healing prayer', 'archangel'],
+            reading: defaultReading,
+          },
+        ],
+      },
+    
     ],
   },
   {
