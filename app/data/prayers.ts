@@ -921,6 +921,19 @@ export const prayerCategories: PrayerCategory[] = [
             searchTerms: ['st teresa of avila', 'perseverance prayer', 'nothing disturbs you'],
             reading: defaultReading,
           },
+          {
+            id: 'st-anthony-of-padua',
+            title: 'Prayer of St. Anthony of Padua',
+            subtitle: 'A prayer for finding lost things',
+            excerpt: 'Ask St. Anthony for help in finding lost items or lost spiritual focus.',
+            content:
+              'O Holy St. Anthony, gentlest of Saints, your love for God and charity for His creatures made you worthy to possess miraculous powers. Help me in my urgent need. (Mention your request here). The answer to my prayer may require a miracle, even so, you are the Saint of Miracles. O gentle and loving St. Anthony, whose heart was ever full of human sympathy, whisper my petition into the ears of the Sweet Infant Jesus, who loved to be carried in your arms; and the gratitude of my heart will ever be yours. Amen.',
+            tags: ['Saints', 'St. Anthony of Padua', 'Lost Items'],
+            season: 'ordinary_time',
+            estimatedDuration: '2 min',
+            searchTerms: ['st anthony of padua', 'lost items prayer', 'miracles'],
+            reading: defaultReading,
+          },
         ],
       }
     
